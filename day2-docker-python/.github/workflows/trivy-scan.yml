@@ -22,10 +22,11 @@ jobs:
         run: docker build -t secure-python-app .
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.11.0
         with:
           image-ref: secure-python-app
           format: table
           exit-code: 1
+          continue-on-error: false
           ignore-unfixed: true
           vuln-type: 'os,library'
