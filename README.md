@@ -1,2 +1,1 @@
-# devsecops-journey
-My DevSecOps practice
+# DevSecOps Learning Journey 🚀
