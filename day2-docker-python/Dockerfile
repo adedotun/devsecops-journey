@@ -7,14 +7,15 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Set working directory
 WORKDIR /app
 
-# Install build dependencies for some Python packages
+# Install build dependencies needed for some Python packages
 RUN apk add --no-cache gcc musl-dev libffi-dev
 
 # Copy dependency files first for caching
 COPY requirements.txt .
 
 # Install Python dependencies as non-root user
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip setuptools && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy app source code
 COPY app.py .
