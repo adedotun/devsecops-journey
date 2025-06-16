@@ -18,11 +18,16 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Change to working directory
+        run: cd day2-docker-python
+
       - name: Install dependencies
+        working-directory: day2-docker-python
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run tests
+        working-directory: day2-docker-python
         run: |
           pytest
