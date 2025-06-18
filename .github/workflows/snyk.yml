@@ -1,4 +1,4 @@
-name: Snyk Python Dependency Scan
+name: Python Snyk Scan
 
 on:
   push:
@@ -7,22 +7,21 @@ on:
     branches: [main]
 
 jobs:
-  snyk:
+  security:
+    name: Snyk Python Scan
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.9
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r day2-docker-python/requirements.txt
+      - name: Install dependencies
+        run: pip install -r day2-docker-python/requirements.txt
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
