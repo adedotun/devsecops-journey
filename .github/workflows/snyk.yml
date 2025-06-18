@@ -30,4 +30,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=day2-docker-python/requirements.txt --command=monitor
+          args: --file=day2-docker-python/requirements.txt 
+                --command=monitor
