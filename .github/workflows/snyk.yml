@@ -32,3 +32,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --file=day2-docker-python/requirements.txt --package-manager=pip
+        
+      - name: Monitor project in Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor --file=day2-docker-python/requirements.txt --package-manager=pip
