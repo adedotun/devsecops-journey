@@ -5,4 +5,9 @@
 
 [![Snyk Container Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk-container.yml/badge.svg)](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk-container.yml)
 
+[![Trivy Docker Image Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/adedotun/devsecops-journey/actions/workflows/trivy-scan.yml)
+
+[![Python Dependency Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk.yml/badge.svg)](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk.yml)
+
+
 
