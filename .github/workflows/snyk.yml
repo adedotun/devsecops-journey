@@ -1,39 +1,34 @@
-name: Snyk Python Scan
+name: Python Dependency Security Scan
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  snyk-scan:
-    name: Snyk Dependency Scan
+  snyk-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools
           pip install -r day2-docker-python/requirements.txt
 
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
       - name: Run Snyk test
+        uses: snyk/actions/python@master
+        with:
+          args: test --file=day2-docker-python/requirements.txt --severity-threshold=high --fail-on=all
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --file=day2-docker-python/requirements.txt --package-manager=pip
-        
-      - name: Monitor project in Snyk
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --file=day2-docker-python/requirements.txt --package-manager=pip
