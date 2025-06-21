@@ -9,5 +9,7 @@
 
 [![Python Dependency Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk.yml/badge.svg)](https://github.com/adedotun/devsecops-journey/actions/workflows/snyk.yml)
 
+![Bandit Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/bandit.yml/badge.svg)
+
 
 
