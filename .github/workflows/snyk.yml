@@ -1,4 +1,4 @@
-name: Snyk Scan for Python dependencies
+name: Snyk Python Security Scan
 
 on:
   push:
@@ -8,15 +8,13 @@ on:
 
 jobs:
   snyk-scan:
-    name: Snyk Scan for Python dependencies
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
@@ -26,9 +24,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r day2-docker-python/requirements.txt
 
-      - name: Run Snyk vulnerability test
+      - name: Run Snyk test
         uses: snyk/actions/python@master
-        with:
-          args: test --file=day2-docker-python/requirements.txt --package-manager=pip --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test --file=day2-docker-python/requirements.txt --package-manager=pip
+
+      - name: Run Snyk monitor
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor --file=day2-docker-python/requirements.txt --package-manager=pip
