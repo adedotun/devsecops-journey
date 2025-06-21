@@ -27,7 +27,7 @@ jobs:
           pip install -r day2-docker-python/requirements.txt
 
       - name: Run Snyk vulnerability test
-        uses: snyk/actions/python@0.5.0
+        uses: snyk/actions/python@master
         with:
           args: test --file=day2-docker-python/requirements.txt --package-manager=pip --skip-unresolved
         env:
