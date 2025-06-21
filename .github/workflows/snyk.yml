@@ -1,17 +1,19 @@
-name: Snyk Python Security Scan
+name: Snyk Python Scan
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   snyk-scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python 3.9
@@ -30,10 +32,3 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test --file=day2-docker-python/requirements.txt --package-manager=pip
-
-      - name: Run Snyk monitor
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor --file=day2-docker-python/requirements.txt --package-manager=pip
