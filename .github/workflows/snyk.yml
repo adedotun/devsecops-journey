@@ -1,4 +1,4 @@
-name: Snyk Python Scan
+name: Snyk Scan for Python dependencies
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   snyk-scan:
     name: Snyk Scan for Python dependencies
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -21,9 +21,9 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r day2-docker-python/requirements.txt
 
       - name: Run Snyk vulnerability test
