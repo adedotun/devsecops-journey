@@ -1,4 +1,4 @@
-name: Python Security (Bandit)
+name: Bandit Security Scan
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
 
 jobs:
   bandit:
-    name: Run Bandit Security Scan
+    name: Run Bandit on Python code
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -24,4 +24,4 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit scan
-        run: bandit -r day2-docker-python -lll
+        run: bandit -r day2-docker-python
