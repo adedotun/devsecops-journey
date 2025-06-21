@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Run Pytest Tests
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -20,12 +20,10 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        working-directory: day2-docker-python
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r day2-docker-python/requirements.txt
+          pip install pytest
 
-      - name: Run tests
-        working-directory: day2-docker-python
-        run: |
-          pytest
+      - name: Run Pytest
+        run: pytest day2-docker-python/test_app.py
