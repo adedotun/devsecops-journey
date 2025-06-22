@@ -11,5 +11,8 @@
 
 ![Bandit Scan](https://github.com/adedotun/devsecops-journey/actions/workflows/bandit.yml/badge.svg)
 
+[![Snyk](https://snyk.io/test/github/adedotun/devsecops-journey/badge.svg)](https://snyk.io/test/github/adedotun/devsecops-journey)
+
+
 
 
