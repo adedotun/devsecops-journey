@@ -7,24 +7,23 @@ on:
     branches: [main]
 
 jobs:
-  snyk-container:
-    name: Snyk Docker Image Scan
+  snyk-docker-scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build -t secure-python-app ./day2-docker-python
+        run: docker build -t secure-python-app:latest ./day2-docker-python
 
-      - name: Snyk scan on Docker image
+      - name: Run Snyk to scan Docker image
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: secure-python-app
-          args: --severity-threshold=medium
+          image: secure-python-app:latest
+          args: --file=day2-docker-python/Dockerfile
