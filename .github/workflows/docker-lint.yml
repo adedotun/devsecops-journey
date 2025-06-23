@@ -1,0 +1,27 @@
+name: Dockerfile Lint
+
+on:
+  push:
+    paths:
+      - 'day2-docker-python/Dockerfile'
+  pull_request:
+    paths:
+      - 'day2-docker-python/Dockerfile'
+
+jobs:
+  lint-dockerfile:
+    name: Lint Dockerfile with Hadolint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install hadolint
+        run: |
+          wget -O hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x hadolint
+          sudo mv hadolint /usr/local/bin/
+
+      - name: Run hadolint on Dockerfile
+        run: hadolint day2-docker-python/Dockerfile
