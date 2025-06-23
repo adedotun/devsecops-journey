@@ -1,0 +1,57 @@
+name: DevSecOps CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  devsecops:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: day2-docker-python
+
+    steps:
+      - name: 🔄 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest bandit
+
+      - name: ✅ Run unit tests with Pytest
+        run: pytest
+
+      - name: 🔐 Run Bandit security scan
+        run: bandit -r .
+
+      - name: 🛡️ Snyk - Python dependencies scan
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test --file=requirements.txt --package-manager=pip --skip-unresolved
+
+      - name: 🐳 Build Docker image
+        run: docker build -t secure-python-app .
+
+      - name: 🐳🔐 Snyk - Docker image scan
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: secure-python-app
+          args: --file=Dockerfile --skip-unresolved
+
+      - name: 🧼 Hadolint - Dockerfile linting
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
