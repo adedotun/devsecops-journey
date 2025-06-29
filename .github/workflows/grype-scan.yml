@@ -1,0 +1,24 @@
+name: Grype Vulnerability Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  grype-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Move SBOM file
+        run: mv sbom-python-app.json ./day2-docker-python/
+
+      - name: Run Grype scan on SBOM
+        run: grype sbom:day2-docker-python/sbom-python-app.json
